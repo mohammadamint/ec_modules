@@ -1,0 +1,12 @@
+# Set this to 'False' to enable user inputs
+use_default_user_resources: True
+
+
+resolution: e_highways #national, e_highways
+
+plots:
+  facecolor: 'white'
+  edgecolor: "#c2c2c0"
+  linewidth: 0.5
+  cmap: winter_r
+  

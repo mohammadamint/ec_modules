@@ -1,0 +1,31 @@
+import yaml
+
+from snakemake.utils import min_version, validate
+
+# Limit the snakemake version to a modern one.
+min_version("8.10")
+
+# Load the default configuration. This will be overridden by users.
+configfile: "../config/default.yaml"
+# Validate the configuration using the schema file.
+validate(config, workflow.source_path("schemas/config.schema.yaml"))
+
+# Load internal settings separately so users cannot modify them.
+with open(workflow.source_path("internal/internal_config.yaml"), "r") as f:
+    internal = yaml.safe_load(f)
+
+# Add all your includes here.
+include: "rules/downloads.smk"
+include: "rules/cluster.smk"
+include: "rules/plots.smk"
+
+
+if config["use_default_user_resources"]:
+    rule all:
+        message: "Generate default output for 'gas_network'."
+        input:
+            expand("results/figs/{resolution}/salt_cavern.svg",resolution=config["resolution"]),
+            expand("results/figs/{resolution}/pipes.svg",resolution=config["resolution"])
+            # expand("results/shapes/{resolution}/onshore_salt_cavern.geojson",resolution=config["resolution"]),
+            # expand("results/shapes/{resolution}/offshore_salt_cavern.geojson",resolution=config["resolution"]),
+

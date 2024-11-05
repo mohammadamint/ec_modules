@@ -1,0 +1,37 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+description: "Configuration schema for gas_grid."
+type: object
+additionalProperties: false
+properties:
+  use_default_user_resources:
+    type: boolean
+    description: "If enabled, user shapefiles for a e-highways resolution model is downloaded."
+  resolution:
+    type: string
+    description: clustering resolution level
+    enum:
+      - national
+      - continental
+      - e_highways
+      - regional
+
+  plots:
+    type: object
+    additionalProperties: false
+    properties:
+      facecolor:
+        type: string
+        description: >
+          the background color of the map plot
+      edgecolor:
+        type: string
+        description: >
+          the border color of the map plot
+      linewidth:
+        type: number
+        description: >
+          the thickness of the border lines
+      cmap:
+        type: string
+        description: >
+          the colorbar map in matplotlib. valid cmaps can be found in https://matplotlib.org/stable/users/explain/colors/colormaps.html
